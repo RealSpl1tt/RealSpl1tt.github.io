@@ -3,79 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pentru Tine ❤️</title>
+    <title>Pentru Teo ❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden; /* Împiedică scroll-ul aiurea pe mobil */
-            background-color: #ffafbd;
-        }
+        body { font-family: 'Segoe UI', sans-serif; overflow: hidden; background-color: #ffafbd; color: white; }
 
         .screen {
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            transition: transform 0.8s cubic-bezier(0.77, 0, 0.175, 1);
-            cursor: pointer;
+            height: 100vh; width: 100vw;
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            position: absolute; top: 0; left: 0;
+            transition: transform 0.6s cubic-bezier(0.77, 0, 0.175, 1);
+            text-align: center; padding: 20px;
         }
 
-        /* Pagina 1 */
-        #page1 {
-            background: linear-gradient(135deg, #ffafbd 0%, #ffc3a0 100%);
-            z-index: 2;
+        /* Culori Fundal */
+        #page1 { background: #ffafbd; z-index: 7; }
+        #page2 { background: #ff9a9e; z-index: 6; transform: translateX(100%); }
+        #page3 { background: #a18cd1; z-index: 5; transform: translateX(100%); }
+        #page4 { background: #fbc2eb; z-index: 4; transform: translateX(100%); }
+        #page5 { background: #84fab0; z-index: 3; transform: translateX(100%); }
+        #page6 { background: #8fd3f4; z-index: 2; transform: translateX(100%); }
+        #page7 { background: #ff0844; z-index: 1; transform: translateX(100%); }
+
+        h1 { font-size: 3rem; text-shadow: 2px 2px 10px rgba(0,0,0,0.1); }
+        
+        input[type="text"] {
+            padding: 15px; border-radius: 25px; border: none; 
+            margin: 20px 0; width: 80%; max-width: 300px; font-size: 1.2rem; text-align: center;
         }
 
-        /* Pagina 2 */
-        #page2 {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            transform: translateX(100%); /* Stă ascunsă în dreapta */
-            z-index: 1;
+        .btn {
+            padding: 12px 30px; border-radius: 25px; border: none;
+            background: white; color: #ff6b6b; font-weight: bold; 
+            font-size: 1.1rem; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
         }
 
-        h1 {
-            font-size: 4rem;
-            color: white;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            user-select: none;
-        }
+        .error-text { color: #ff3333; font-weight: bold; margin-top: 10px; min-height: 24px; }
+        
+        .checkbox-container { margin: 20px; font-size: 1.5rem; display: flex; gap: 20px; }
+        label { cursor: pointer; background: rgba(255,255,255,0.2); padding: 10px 20px; border-radius: 15px; }
 
-        .heart {
-            position: absolute;
-            bottom: 20%;
-            font-size: 1.5rem;
-            opacity: 0.6;
-            animation: float 3s infinite ease-in-out;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
+        /* Animatie Lacrimi */
+        .tears { font-size: 4rem; display: none; animation: shake 0.5s infinite; }
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
     </style>
 </head>
 <body>
 
-    <div id="page1" class="screen" onclick="nextPage()">
-        <h1>hei</h1>
-        <div class="heart" style="left: 20%;">❤️</div>
-        <div class="heart" style="right: 25%; animation-delay: 1s;">💖</div>
+    <audio id="successMusic">
+        <source src="melodia-ta.mp3" type="audio/mpeg">
+    </audio>
+
+    <div id="page1" class="screen" onclick="nextPage(1)"><h1>hei</h1></div>
+
+    <div id="page2" class="screen" onclick="nextPage(2)"><h1>BUNA!!!</h1></div>
+
+    <div id="page3" class="screen">
+        <h2>Introdu numele:</h2>
+        <input type="text" id="nameInput" placeholder="Numele tau...">
+        <button class="btn" onclick="checkName()">Gata</button>
+        <p id="nameError" class="error-text"></p>
     </div>
 
-    <div id="page2" class="screen">
-        <h1>BUNA!!!</h1>
+    <div id="page4" class="screen" onclick="nextPage(4)">
+        <h1>BUNA TEO <3<3<3<3!!!!</h1>
+    </div>
+
+    <div id="page5" class="screen">
+        <h1>Ai Valentine?</h1>
+        <div class="checkbox-container">
+            <label onclick="nextPage(5)">DA</label>
+            <label onclick="failValentine()">NU</label>
+        </div>
+        <p id="valError" class="error-text"></p>
+    </div>
+
+    <div id="page6" class="screen">
+        <h1 id="question6">Vrei sa fii Valentine-ul meu?</h1>
+        <div id="tearsAnim" class="tears">😭😭😭</div>
+        <div class="checkbox-container" id="controls6">
+            <label onclick="celebrate()">DA</label>
+            <label onclick="cry()">NU</label>
+        </div>
+    </div>
+
+    <div id="page7" class="screen">
+        <h1>HELL YEAH! 🤘🔥</h1>
+        <p>❤️ ❤️ ❤️</p>
     </div>
 
     <script>
-        function nextPage() {
-            // Slide la prima pagină spre stânga
-            document.getElementById('page1').style.transform = 'translateX(-100%)';
-            // Aduce pagina a doua în centru
-            document.getElementById('page2').style.transform = 'translateX(0)';
+        function nextPage(current) {
+            document.getElementById('page' + current).style.transform = 'translateX(-100%)';
+            document.getElementById('page' + (current + 1)).style.transform = 'translateX(0)';
+        }
+
+        function checkName() {
+            const name = document.getElementById('nameInput').value.trim().toLowerCase();
+            if (name === 'teodora' || name === 'teo') {
+                nextPage(3);
+            } else {
+                document.getElementById('nameError').innerText = "Mai ancearca, Teo...";
+            }
+        }
+
+        function failValentine() {
+            document.getElementById('valError').innerText = "Mananci caca, mai incearca";
+        }
+
+        function cry() {
+            const msg = document.getElementById('question6');
+            const tears = document.getElementById('tearsAnim');
+            const controls = document.getElementById('controls6');
+
+            msg.style.display = 'none';
+            controls.style.display = 'none';
+            tears.style.display = 'block';
+
+            setTimeout(() => {
+                tears.style.display = 'none';
+                msg.style.display = 'block';
+                controls.style.display = 'flex';
+            }, 3000);
+        }
+
+        function celebrate() {
+            nextPage(6);
+            const music = document.getElementById('successMusic');
+            music.play().catch(e => console.log("Audio a fost blocat de browser. Trebuie un click manual."));
         }
     </script>
 </body>
