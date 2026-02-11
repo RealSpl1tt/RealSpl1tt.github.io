@@ -6,7 +6,7 @@
     <title>Pentru Teo ❤️</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', sans-serif; overflow: hidden; background-color: #ffafbd; color: white; }
+        body { font-family: 'Montserrat', sans-serif; overflow: hidden; background-color: #ffafbd; color: white; }
 
         .screen {
             height: 100vh; width: 100vw;
@@ -52,7 +52,7 @@
 <body>
 
     <audio id="successMusic">
-        <source src="melodia-ta.mp3" type="audio/mpeg">
+        <source src="assets/nuevayol.mp3" type="audio/mpeg">
     </audio>
 
     <div id="page1" class="screen" onclick="nextPage(1)"><h1>hei</h1></div>
@@ -88,11 +88,82 @@
         </div>
     </div>
 
-    <div id="page7" class="screen">
-        <h1>HELL YEAH! 🤘🔥</h1>
-        <p>❤️ ❤️ ❤️</p>
+   <div id="page7" class="screen">
+    <h1 style="margin-bottom: 20px;">HELL YEAH! 🤘🔥</h1>
+    
+    <div class="marquee-container">
+        <div class="marquee-content" id="imageTrack">
+            </div>
     </div>
 
+    <p style="margin-top: 20px;">❤️ ❤️ ❤️</p>
+</div>
+
+<style>
+    /* Stiluri noi pentru animația de imagini */
+    .marquee-container {
+        width: 100%;
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.1);
+        padding: 20px 0;
+        white-space: nowrap;
+        position: relative;
+    }
+
+    .marquee-content {
+        display: inline-block;
+        animation: scrollInfinite 20s linear infinite; /* Viteza de derulare */
+    }
+
+    .marquee-content img {
+        height: 200px; /* Înălțimea pozelor pe telefon */
+        width: auto;
+        margin: 0 10px;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    @keyframes scrollInfinite {
+        0% { transform: translateX(0); }
+        100% { transform: translateX(-50%); } /* Merge până la jumătate (pentru că dublăm conținutul) */
+    }
+</style>
+
+<script>
+    // --- ADAUGĂ ACEST COD ÎN SECȚIUNEA DE SCRIPT ---
+
+    const track = document.getElementById('imageTrack');
+    
+    // Aici pui link-urile tale spre cele 30 de poze
+    // Dacă ai pozele salvate local: 'poza1.jpg', 'poza2.jpg' etc.
+    const images = [
+        'assets/1.jpg', 'assets/2.jpg', 'assets/3.jpg', 'assets/4.jpg', 'assets/5.jpg', 'assets/6.jpg', 'assets/7.jpg', 'assets/8.jpg', 'assets/9.jpg', 'assets/10.jpg', 
+        'assets/11.jpg', 'assets/12.jpg', 'assets/13.jpg', 'assets/14.jpg', 'assets/15.jpg', 'assets/16.jpg', 'assets/17.jpg', 'assets/18.jpg', 'assets/19.jpg', 'assets/20.jpg', 
+        'assets/21.jpg', 'assets/22.jpg', 'assets/23.jpg', 'assets/24.jpg', 'assets/25.jpg', 'assets/26.jpg', 'assets/27.jpg', 'assets/28.jpg', 'assets/29.jpg', 'assets/30.jpg', 
+    ];
+
+    // Funcție care umple banda cu imagini
+    function setupGallery() {
+        // Generăm imaginile o dată
+        let content = '';
+        images.forEach(src => {
+            content += `<img src="${src}" alt="Teo ❤️">`;
+        });
+        
+        // Dublăm conținutul pentru a crea efectul de "infinit" (seamless loop)
+        track.innerHTML = content + content;
+    }
+
+    // Apelează funcția la început
+    setupGallery();
+
+    // Modifică funcția celebrate() de dinainte să includă muzica:
+    function celebrate() {
+        nextPage(6);
+        const music = document.getElementById('successMusic');
+        music.play();
+    }
+</script>
     <script>
         function nextPage(current) {
             document.getElementById('page' + current).style.transform = 'translateX(-100%)';
